@@ -1,5 +1,5 @@
 {
-  "name": "novius/laravel-translation-loader",
+  "name": "sandj/laravel-translation-loader",
   "description": "Store your language lines in the database, yaml or other sources",
   "keywords": [
     "laravel",
