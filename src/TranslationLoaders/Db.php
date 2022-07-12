@@ -4,6 +4,7 @@ namespace Novius\TranslationLoader\TranslationLoaders;
 
 use Novius\TranslationLoader\LanguageLine;
 use Novius\TranslationLoader\Exceptions\InvalidConfiguration;
+use Throwable;
 
 class Db implements TranslationLoader
 {
@@ -11,7 +12,16 @@ class Db implements TranslationLoader
     {
         $model = $this->getConfiguredModelClass();
 
-        return $model::getTranslationsForGroup($locale, $group, $namespace);
+        try {
+            return $model::getTranslationsForGroup($locale, $group, $namespace);
+        }
+        catch (Throwable $e) {
+            // If console ignore
+            if (app()->runningInConsole()) {
+                return [];
+            }
+            throw $e;
+        }
     }
 
     protected function getConfiguredModelClass(): string
